@@ -1,0 +1,6 @@
+Desktop: DESKTOP-1QPLQOE\TEW_SQLEXPRESS
+
+Accounts: aspnet-Accounts
+Broker: aspnet-Broker
+Orders: aspnet-Orders
+Stock: aspnet-Stock

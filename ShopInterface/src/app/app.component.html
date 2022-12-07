@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <span routerLink="" class="link">
+    <span>
+      {{title}}
+    </span>
+  </span>
+  <span class="spacer"></span>
+  <span class="link" routerLink="shop">
+    <mat-icon class="center" color="accent">shopping_cart</mat-icon>
+    <span>Shop</span>
+  </span>
+  <span class="divide"></span>
+  <span class="link" routerLink="maintenance">
+    <mat-icon class="center" color="accent">settings</mat-icon>
+    <span >Maintenance</span>
+  </span>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

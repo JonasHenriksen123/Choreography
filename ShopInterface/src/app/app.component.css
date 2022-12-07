@@ -1,0 +1,19 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.link {
+    cursor:pointer;
+}
+
+  .link:hover {
+    color: orange;
+  }
+
+.divide {
+    width: 20px;
+}
+
+.center {
+  vertical-align: sub;
+}

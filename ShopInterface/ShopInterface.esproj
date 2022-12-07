@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.62-alpha">
+  <PropertyGroup>
+    <StartupCommand>npm start</StartupCommand>
+    <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
+    <!-- Command to run on project build -->
+    <BuildCommand>
+    </BuildCommand>
+    <!-- Command to create an optimized build of the project that's ready for publishing -->
+    <ProductionBuildCommand>npm run build</ProductionBuildCommand>
+    <!-- Folder where production build objects will be placed -->
+    <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\ShopInterface</BuildOutputFolder>
+  </PropertyGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Remove="dist\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\vendor.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\vendor.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\styles.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\styles.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\runtime.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\runtime.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\polyfills.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\polyfills.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\main.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\main.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dist\shop-interface\favicon.ico" />
+  </ItemGroup>
+</Project>
