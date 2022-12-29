@@ -1,4 +1,6 @@
-﻿namespace Orders.Model
+﻿using System.Text.Json.Serialization;
+
+namespace Orders.Model
 {
     public class OrderLine
     {
@@ -14,6 +16,7 @@
 
         public decimal Total { get; set; }
 
+        [JsonIgnore]
         public Order? Order { get; set; } 
     }
 }

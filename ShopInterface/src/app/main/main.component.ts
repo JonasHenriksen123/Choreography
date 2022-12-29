@@ -22,29 +22,5 @@ export class MainComponent implements OnInit {
         this.APIVersion = r.toString();
       }
     })
-
-    this.http.get("http://localhost/Broker/info/version", { responseType: 'text' }).toPromise().then(r => {
-      if (r != null) {
-        this.BrokerVersion = r.toString();
-      }
-    })
-
-    this.http.get("http://localhost/Accounts/info/version", { responseType: 'text' }).toPromise().then(r => {
-      if (r != null) {
-        this.AccountsVersion = r.toString();
-      }
-    })
-
-    this.http.get("http://localhost/Orders/info/version", { responseType: 'text' }).toPromise().then(r => {
-      if (r != null) {
-        this.OrdersVersion = r.toString();
-      }
-    })
-
-    this.http.get("http://localhost/Stock/info/version", { responseType: 'text' }).toPromise().then(r => {
-      if (r != null) {
-        this.StockVersion = r.toString();
-      }
-    })
     }
 }

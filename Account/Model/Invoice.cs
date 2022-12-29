@@ -1,4 +1,6 @@
-﻿namespace Accounts.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Accounts.Model
 {
     public class Invoice
     {
@@ -20,6 +22,7 @@
 
         public int State { get; set; }
 
+        [NotMapped]
         public StateEnum InvoiceState 
         {
             get

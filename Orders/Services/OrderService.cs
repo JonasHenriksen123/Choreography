@@ -32,10 +32,6 @@ namespace Orders.Services
                 this.dbContext.Orders.Add(order);
                 this.dbContext.SaveChanges();
 
-                //create orderLines
-                this.dbContext.OrderLines.AddRange(order.Lines!);
-                this.dbContext.SaveChanges();
-
                 //publish event
                 var resp = this.webClient.PostEvent(new Event { EventId = order.OrderId, EventName = "OrderCreated", EventQueue = Event.QueueEnum.OrderQueue, Params = order.GenerateOrderCreatedParams() }).Result;
                 if (!resp)

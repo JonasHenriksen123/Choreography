@@ -30,6 +30,7 @@ namespace Accounts.Services
             }
 
             //we need to see if this event has already been handled
+            this.dbContext.ChangeTracker.Clear();
             var res = this.dbContext.Events
                 .Where(e => e.EventId == @event.EventId && e.Queue == @event.Queue && e.EventName == @event.EventName)
                 .SingleOrDefault();

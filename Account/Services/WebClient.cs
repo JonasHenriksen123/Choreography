@@ -9,7 +9,7 @@ namespace Accounts.Services
         private readonly HttpClient client;
 
         public const string BrokerBaseUrl = "http://localhost/Broker/";
-        public const string OrderBaseUrl = "http://localhost/Orders";
+        public const string OrderBaseUrl = "http://localhost/Orders/";
 
         public WebClient() 
         {

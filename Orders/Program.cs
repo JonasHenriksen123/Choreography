@@ -35,11 +35,11 @@ internal class Program
 
     private static void configureServices(IServiceCollection services)
     {
-        services.AddTransient<IVersionService, VersionService>();
-        services.AddTransient<IWebClient, WebClient>();
-        services.AddTransient<IEventService, EventService>();
-        services.AddTransient<IEventHandlerService, EventHandlerService>();
-        services.AddTransient<IOrderService, OrderService>();
+        services.AddScoped<IVersionService, VersionService>();
+        services.AddScoped<IWebClient, WebClient>();
+        services.AddSingleton<IEventService, EventService>();
+        services.AddSingleton<IEventHandlerService, EventHandlerService>();
+        services.AddScoped<IOrderService, OrderService>();
         services.AddHostedService<QueuedHostedService>();
         services.AddSingleton<IBackgroundTaskQueue>(ctx =>
         {
@@ -48,6 +48,6 @@ internal class Program
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-        services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-1QPLQOE\TEW_SQLEXPRESS;Initial Catalog=aspnet-Orders;Integrated Security=True;Pooling=False;TrustServerCertificate=True"));
+        services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-1QPLQOE\TEW_SQLEXPRESS;Initial Catalog=aspnet-Orders;Integrated Security=True;Pooling=False;TrustServerCertificate=True"), ServiceLifetime.Transient);
     }
 }

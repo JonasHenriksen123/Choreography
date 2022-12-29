@@ -1,0 +1,83 @@
+  <div style="width:25%;">
+    <mat-card class="clickable" (click)="newItem()" [appearance]="'outlined'">
+      <mat-card-header>
+        <mat-card-title>New Item</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div style="width:auto; height: 50px; border: solid; border-width: 4px; border-radius: 7px; opacity:.25; display:flex">
+          <mat-icon style="margin:auto" class="example-tab-icon">add_box</mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngFor="let item of items" class="clickable" (click)="openItem(item)" [appearance]="'outlined'">
+      <mat-card-header>
+        <mat-card-title>{{ item.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{ item.description }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div style="flex-grow:2; padding-left:20px">
+    <div *ngIf="itemCreateView">
+      <mat-form-field class="form">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="itemName">
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field class="form">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="itemDescription" placeholder="Description"></textarea>
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field class="form">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" [(ngModel)]="itemPrice">
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field class="form">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" [(ngModel)]="itemAmount">
+      </mat-form-field>
+
+      <br />
+
+      <button (click)="createItem()" mat-mini-fab color="primary">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <div style="padding:20px" *ngIf="currentItem != null">
+      <h1>
+        {{ currentItem.name }}
+      </h1>
+      <br />
+      <b>
+        Description
+      </b>
+      <p>
+        {{ currentItem.description }}
+      </p>
+      <br />
+      <br />
+      <b>
+        Price
+      </b>
+      <p>
+        {{ currentItem.price }} kr.
+      </p>
+      <br />
+      <br />
+      <b>In stock</b>
+      <div style="display:flex">
+        <p>{{ currentItem.amount }}</p>
+      </div>
+    </div>
+  </div>

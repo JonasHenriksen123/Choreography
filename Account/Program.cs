@@ -35,9 +35,9 @@ internal class Program
     private static void configureServices(IServiceCollection services)
     {
         services.AddTransient<IVersionService, VersionService>();
-        services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-1QPLQOE\TEW_SQLEXPRESS;Initial Catalog=aspnet-Accounts;Integrated Security=True;Pooling=False;TrustServerCertificate=True"));
-        services.AddTransient<IEventService, EventService>();
-        services.AddTransient<IEventHandlerService, EventHandlerService>();
+        services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-1QPLQOE\TEW_SQLEXPRESS;Initial Catalog=aspnet-Accounts;Integrated Security=True;Pooling=False;TrustServerCertificate=True"), ServiceLifetime.Transient);
+        services.AddSingleton<IEventService, EventService>();
+        services.AddSingleton<IEventHandlerService, EventHandlerService>();
         services.AddTransient<IWebClient, WebClient>();
         services.AddHostedService<QueuedHostedService>();
         services.AddSingleton<IBackgroundTaskQueue>(ctx =>

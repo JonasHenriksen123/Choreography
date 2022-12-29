@@ -27,7 +27,7 @@ namespace Stock.Services
             if (!cancellationToken.IsCancellationRequested)
             {
                 //let event service handle event
-               await this.eventService.HandleEvent(@event);
+                await this.eventService.HandleEvent(@event);
             }
         }
     }

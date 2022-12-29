@@ -1,0 +1,10 @@
+
+.clickable {
+  cursor: pointer;
+}
+
+.cart-button-container {
+  position: fixed;
+  top: 80px;
+  right: 20px
+}

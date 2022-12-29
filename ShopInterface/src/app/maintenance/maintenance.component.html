@@ -1,1 +1,35 @@
-<p>maintenance works!</p>
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div style="width:200px">
+        <mat-icon class="example-tab-icon center">extension</mat-icon>
+        <span>Items</span>
+      </div>
+    </ng-template>
+    <ng-template matTabContent>
+      <app-items style="display: flex;"></app-items>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div style="width:200px">
+        <mat-icon class="example-tab-icon center">assignment</mat-icon>
+        <span>Orders</span>
+      </div>
+    </ng-template>
+    <ng-template matTabContent>
+      <app-orders style="display:flex"></app-orders>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div style="width:200px">
+        <mat-icon class="example-tab-icon center">person</mat-icon>
+        <span>Accounts</span>
+      </div>
+    </ng-template>
+    <ng-template matTabContent>
+      <app-accounts style="display:flex"></app-accounts>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -1,5 +1,6 @@
 ﻿using Broker.Model;
 using Broker.ServiceAPI;
+using Microsoft.EntityFrameworkCore;
 
 namespace Broker.Services
 {
@@ -33,6 +34,7 @@ namespace Broker.Services
                 return false;
             }
 
+            this.dbContext.ChangeTracker.Clear();
             this.relayService.ScheduleMessage(@event).Wait();
 
             return true;
@@ -41,10 +43,10 @@ namespace Broker.Services
         public IEnumerable<Event> GetEvents(Guid EventId)
         {
             //get events for Id
-            var events = this.dbContext.Events
+            var events = this.dbContext.Events.AsNoTracking()
                 .Where(e => e.EventId == EventId)
                 .OrderBy(e => e.PublishDate)
-                .ToList();
+                .ToArray();
 
             return events;
         }

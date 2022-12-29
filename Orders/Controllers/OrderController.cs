@@ -40,7 +40,7 @@ namespace Orders.Controllers
             return resp;
         }
 
-        [Route("Order/{id:Guid/full}")]
+        [Route("Order/{id:Guid}/full")]
         [HttpGet]
         public ActionResult<Order> GetFull(Guid id)
         {
@@ -48,6 +48,18 @@ namespace Orders.Controllers
                 .Include(o => o.Lines)
                 .Where(o => o.OrderId == id)
                 .SingleOrDefault();
+
+            if (resp == null) return this.NotFound();
+
+            return resp;
+        }
+
+        [Route("Order/{id:guid}/orderlines")]
+        public ActionResult<OrderLine[]> GetOrderLines(Guid id)
+        {
+            var resp = dbContext.OrderLines
+                .Where(o => o.OrderId == id)
+                .ToArray();
 
             if (resp == null) return this.NotFound();
 

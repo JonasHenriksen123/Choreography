@@ -37,6 +37,7 @@ namespace Orders.Services
             }
 
             //we need to see if this event has already been handled
+            this.dbContext.ChangeTracker.Clear();
             var res = this.dbContext.Events
                 .Where(e => e.EventId == @event.EventId && e.Queue == @event.Queue && e.EventName == @event.EventName)
                 .SingleOrDefault();
@@ -81,8 +82,15 @@ namespace Orders.Services
                 return;
             }
 
-            order.OrderState = Order.StateEnum.PendingPayment;
+            if (@event.EventName == "ItemsReserved")
+            {
+                order.OrderState = Order.StateEnum.PendingPayment;
+            }
+            if (@event.EventName == "AccountCreditReserved")
+            {
+                order.OrderState = Order.StateEnum.Created;
 
+            }
             //start transaction
             using var transaction = this.dbContext.Database.BeginTransaction();
 

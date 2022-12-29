@@ -5,6 +5,7 @@ using ShopAPI.Services;
 
 internal class Program
 {
+    public const string allowpolicy = "_localallowpolicy";
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseCors(allowpolicy);
 
         app.UseHttpsRedirection();
 
@@ -39,5 +42,15 @@ internal class Program
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name: allowpolicy,
+                policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200");
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                });
+        });
     }
 }

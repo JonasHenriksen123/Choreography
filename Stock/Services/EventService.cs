@@ -34,6 +34,7 @@ namespace Stock.Services
             }
 
             //we need to see if this event has already been handled
+            this.dbContext.ChangeTracker.Clear();
             var res = this.dbContext.Events
                 .Where(e => e.EventId == @event.EventId && e.Queue == @event.Queue && e.EventName == @event.EventName)
                 .SingleOrDefault();
@@ -65,7 +66,7 @@ namespace Stock.Services
             if (param == null || param.Items == null || !param.Items.Any()) return;
 
             //start transaction
-            using var transaction = this.dbContext.Database.BeginTransaction();
+            var transaction = this.dbContext.Database.BeginTransaction();
 
             try
             {

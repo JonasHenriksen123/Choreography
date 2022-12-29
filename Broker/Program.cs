@@ -35,15 +35,18 @@ internal class Program
     private static void configureServices(IServiceCollection services)
     {
         services.AddTransient<IVersionService, VersionService>();
-        services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-1QPLQOE\TEW_SQLEXPRESS;Initial Catalog=aspnet-Broker;Integrated Security=True;Pooling=False;TrustServerCertificate=True"));
+        services.AddDbContext<DatabaseContext>(options => 
+        options.UseSqlServer(@"Data Source=DESKTOP-1QPLQOE\TEW_SQLEXPRESS;Initial Catalog=aspnet-Broker;Integrated Security=True;Pooling=False;TrustServerCertificate=True")
+        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+        , ServiceLifetime.Transient);
         services.AddTransient<IWebClient, WebClient>();
         services.AddHostedService<QueuedHostedService>();
         services.AddSingleton<IBackgroundTaskQueue>(ctx =>
         {
             return new BackgroundTaskQueue(100);
         });
-        services.AddTransient<IRelayService, RelayService>();
-        services.AddTransient<IEventService, EventService>();
+        services.AddSingleton<IRelayService, RelayService>();
+        services.AddSingleton<IEventService, EventService>();
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();

@@ -33,6 +33,7 @@ namespace Orders.Model
                 {
                     (int)StateEnum.Pending => StateEnum.Pending,
                     (int)StateEnum.Created => StateEnum.Created,
+                    (int)StateEnum.PendingPayment => StateEnum.PendingPayment,
                     (int)StateEnum.New => StateEnum.New,
                     _ => throw new Exception("Unknown"),
                 };
@@ -43,6 +44,7 @@ namespace Orders.Model
                 {
                     StateEnum.Pending => (int)StateEnum.Pending,
                     StateEnum.Created => (int)StateEnum.Created,
+                    StateEnum.PendingPayment => (int)StateEnum.PendingPayment,
                     StateEnum.New => throw new Exception("Not allowed"),
                     _ => throw new Exception("Unknown"),
                 };
@@ -57,7 +59,7 @@ namespace Orders.Model
 
             var res = new
             {
-                items = Lines.Select(l => new { itemId = l.ItemId, amount = l.Amount })
+                items = Lines.Select(l => new { itemId = l.ItemId, amount = l.Count })
             };
 
             return JsonSerializer.Serialize(res);

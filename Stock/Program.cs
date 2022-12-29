@@ -33,16 +33,17 @@ internal class Program
     }
     private static void configureServices(IServiceCollection services)
     {
-        services.AddTransient<IVersionService, VersionService>();
-        services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-1QPLQOE\TEW_SQLEXPRESS;Initial Catalog=aspnet-Stock;Integrated Security=True;Pooling=False;TrustServerCertificate=True"));
-        services.AddTransient<IWebClient, WebClient>();
+        services.AddScoped<IVersionService, VersionService>();
+        services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-1QPLQOE\TEW_SQLEXPRESS;Initial Catalog=aspnet-Stock;Integrated Security=True;Pooling=False;TrustServerCertificate=True"), ServiceLifetime.Transient);
+        services.AddScoped<IWebClient, WebClient>();
         services.AddHostedService<QueuedHostedService>();
         services.AddSingleton<IBackgroundTaskQueue>(ctx =>
         {
             return new BackgroundTaskQueue(100);
         });
-        services.AddTransient<IEventService, EventService>();
-        services.AddTransient<IEventHandlerService, EventHandlerService>();
+        services.AddSingleton<IEventService, EventService>();
+        services.AddSingleton<IEventHandlerService, EventHandlerService>();
+        services.AddScoped<IItemService, ItemService>();
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();

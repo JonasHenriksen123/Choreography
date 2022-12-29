@@ -35,5 +35,33 @@ namespace Accounts.Controllers
             
             return resp;
         }
+
+        [Route("Account")]
+        [HttpPost]
+        public ActionResult<Account> Post([FromBody] Account account)
+        {
+            if (account == null) return this.BadRequest();
+
+            account.Credit = account.CreditAmount;
+            account.AccountId = Guid.NewGuid();
+
+            this.dbContext.Accounts.Add(account);
+            this.dbContext.SaveChanges();
+
+            return account;
+        }
+
+
+        [Route("Account/{id:Guid}/invoices")]
+        public ActionResult<Invoice[]> GetInvoices(Guid id)
+        {
+            var resp = this.dbContext.Invoices
+                .Where(i => i.AccountId == id)
+                .ToArray();
+
+            if (resp == null || !resp.Any()) return this.NotFound();
+
+            return resp;
+        }
     }
 }

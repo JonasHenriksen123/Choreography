@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[Events]
 (
-	[EventId] char(16) NOT NULL,
-	[EventName] varchar(max) not null,
+	[EventId] UNIQUEIDENTIFIER NOT NULL,
+	[EventName] varchar(40) not null,
 	[PublishDate] datetime not null,
 	[Queue] int not null,
-	[Params] varchar(max)
+	[Params] varchar(max), 
 )

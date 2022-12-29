@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stock.Model;
+using Stock.ServiceAPI;
 
 namespace Stock.Controllers
 {
@@ -7,14 +8,16 @@ namespace Stock.Controllers
     public class ItemController : ControllerBase
     {
         private readonly DatabaseContext dbContext;
+        private readonly IItemService itemService;
 
-        public ItemController(DatabaseContext dbContext)
+        public ItemController(DatabaseContext dbContext, IItemService itemService)
         {
             this.dbContext = dbContext;
+            this.itemService = itemService;
         }
 
         [Route("Item")]
-        public ActionResult<Item[]> Get()
+        public ActionResult<IPartialItem[]> Get()
         {
             var resp = this.dbContext.Items
                 .OrderBy(i => i.ItemId)
@@ -32,6 +35,17 @@ namespace Stock.Controllers
                 .SingleOrDefault(i => i.ItemId == id);
 
             if (resp == null) return this.NotFound();
+
+            return resp;
+        }
+
+        [Route("Item")]
+        [HttpPost]
+        public ActionResult<Item> Post([FromBody] Item item) 
+        {
+            var resp = this.itemService.CreateItem(item);
+
+            if (resp == null) return this.BadRequest();
 
             return resp;
         }

@@ -1,6 +1,6 @@
 ﻿namespace Stock.Model
 {
-    public class Item
+    public class Item : IPartialItem
     {
         public Guid ItemId { get; set; }
 

@@ -1,3 +1,136 @@
-<p>shop works!</p>
-<br />
-<p>{{ accounts }}</p>
+<div style="display:flex">
+  <div style="flex-grow:2"></div>
+  <div style="background-color:lightgrey; width: 900px; padding: 5px 30px 5px 30px">
+    <div *ngIf="!showingCart && !makingOrder">
+      <mat-card style="margin: 5px 0 5px 0" *ngFor="let item of items" [appearance]="'outlined'">
+        <mat-card-header>
+          <mat-card-title>{{ item.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{ item.description }}
+          </p>
+          <div style="display:flex; justify-content:space-between">
+            <p>
+              {{ item.price }} kr.
+            </p>
+            <p>
+              {{ item.amount }} In stock
+            </p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <input style="width:40px" #amount matInput type="number" value="1">
+          <button (click)="addToCart(item, amount.value); amount.value='1'" mat-button>Add to cart</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div *ngIf="showingCart">
+      <mat-card style="margin: 5px 0 5px 0" *ngFor="let line of orderItems" [appearance]="'outlined'">
+        <mat-card-header>
+          <mat-card-title>{{ line.Item!.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div style="display:flex; justify-content:space-between">
+            <p>
+              {{ line.Item!.price }} kr.
+            </p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <input style="width:40px" matInput type="number" [(ngModel)]="line.amount" (ngModelChange)="updateCart()">
+        </mat-card-actions>
+      </mat-card>
+      <mat-card>
+      <mat-card-content>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end">
+          <p>
+            Pieces {{ orderCount }}
+          </p>
+          <p>
+            Total: {{ orderTotal | number:'0.2' }} kr.
+          </p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button *ngIf="orderCount > 0" (click)="makeOrder()" mat-button>Place order</button>
+      </mat-card-actions>
+      </mat-card>
+    </div>
+    <div *ngIf="makingOrder">
+      <mat-card style="margin: 5px 0 5px 0" [appearance]="'outlined'">
+        <mat-card-content>
+          <mat-stepper linear #stepper>
+            <mat-step [stepControl]="firstFormGroup" editable="false">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Account</ng-template>
+                <mat-form-field appearance="fill">
+                  <mat-label>Account</mat-label>
+                  <mat-select formControlName="accountControl" [(value)]="account" required>
+                    <mat-option value="null">None</mat-option>
+                    <mat-option *ngFor="let account of accounts" [value]="account.accountId">{{ account.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperNext (click)="placeOrder()">Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" editable="false">
+              <div *ngIf="processing" style="display: flex; justify-content: center;">
+                <mat-spinner></mat-spinner>
+              </div>
+              <div *ngIf="failed" style="display:flex; justify-content:center">
+                <h1>Order was declined</h1>
+              </div>
+              <form [formGroup]="secondFormGroup" >
+                <ng-template matStepLabel>Payment</ng-template>
+                <div *ngIf="!processing && !failed">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Credit Card Number</mat-label>
+                    <input type="number" matInput formControlName="secondCtrl">
+                  </mat-form-field>
+                  <br />
+                  <mat-form-field appearance="fill">
+                    <mat-label>Expiry month</mat-label>
+                    <input type="number" matInput formControlName="thirdCtrl">
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Expiry year</mat-label>
+                    <input type="number" matInput formControlName="fourthCtrl">
+                  </mat-form-field>
+                  <br />
+                  <mat-form-field appearance="fill">
+                    <mat-label>cvv</mat-label>
+                    <input type="number" matInput formControlName="fifthCtrl">
+                  </mat-form-field>
+                  <div>
+                    <button mat-button matStepperNext>Next</button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step editable="false">
+              <ng-template matStepLabel>Done</ng-template>
+            </mat-step>
+          </mat-stepper>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div style="flex-grow:2"></div>
+</div>
+
+<div *ngIf="!showingCart && !makingOrder" class="cart-button-container">
+  <button mat-fab (click)="showCart()" color="accent">
+    <mat-icon>shopping_cart</mat-icon>
+    <span>{{orderCount}}</span>
+  </button>
+</div>
+
+<div *ngIf="showingCart && !makingOrder" class="cart-button-container">
+  <button mat-fab (click)="hideCart()" color="accent">
+    <mat-icon>keyboard_return</mat-icon>
+  </button>
+</div>
+
